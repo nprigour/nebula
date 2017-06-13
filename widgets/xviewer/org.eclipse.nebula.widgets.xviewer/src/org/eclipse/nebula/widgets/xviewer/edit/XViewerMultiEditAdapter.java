@@ -89,14 +89,16 @@ public class XViewerMultiEditAdapter extends XViewerEditAdapter {
    }
 
    @Override
-   protected void refreshElement(Object toRefresh) {
-      if (toRefresh instanceof List<?>) {
-         for (Object o : (List<?>) toRefresh) {
-            super.refreshElement(o);
-         }
-      } else {
-         super.refreshElement(toRefresh);
-      }
+   void refreshElement(Object toRefresh) {
+	   // System.out.println("XXX Refreshing " + toRefresh);
+	   if (toRefresh instanceof List<?>) {
+		   //for (Object o : (List<?>) toRefresh) {
+		   //   super.refreshElement(o);
+		   //}
+		   xv.update(((List<?>)toRefresh).toArray(), null);
+	   } else {
+		   super.refreshElement(toRefresh);
+	   }
    }
 
 }
