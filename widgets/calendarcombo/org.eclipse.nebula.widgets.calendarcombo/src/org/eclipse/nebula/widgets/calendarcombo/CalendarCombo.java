@@ -1028,7 +1028,7 @@ public class CalendarCombo extends Composite {
     }
 
     private synchronized void kill(int debug) {
-        kill(debug, false);
+        kill(debug, true);
     }
 
     // kills the popup area and unhooks various listeners, takes an integer so
