@@ -13,6 +13,8 @@ package org.eclipse.nebula.widgets.xviewer.util.internal.dialog;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.nebula.widgets.xviewer.util.internal.PatternFilter;
@@ -51,13 +53,18 @@ public class XCheckedFilteredTree extends XFilteredTree {
             restoreChecked(treeViewer.getTree().getItems());
          }
       });
-      getViewer().getTree().addPaintListener(new PaintListener() {
-
-         @Override
-         public void paintControl(PaintEvent e) {
-            restoreChecked(treeViewer.getTree().getItems());
-         }
-      });
+      
+      //this PaintListener seems to cause a problem with checking of rows
+      //in GTK environment (Ubuntu). So do not use it for GTK window System.
+      if (!Platform.getWS().equals(Platform.WS_GTK)) {
+	      getViewer().getTree().addPaintListener(new PaintListener() {
+	
+	         @Override
+	         public void paintControl(PaintEvent e) {
+	            restoreChecked(treeViewer.getTree().getItems());
+	         }
+	      });
+      }
       return control;
    }
 
